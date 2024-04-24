@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reqres api</title>
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.0.13/css/all.css"
+    />
+  </head>
+  <body>
+    <a href="#">Fetch</a>
+    <div class="container"></div>
+  </body>
+  <script>
+    let btn = document.querySelector("a");
+    let mainBox = document.querySelector(".container");
+    btn.addEventListener("click", async function () {
+      try {
+        let apiData = await fetch("https://reqres.in/api/users?page=2");
+        let realData = await apiData.json();
+        console.log(realData);
+        showData(realData);
+      } catch (error) {
+        window.alert("Not Able to Fetch From Api");
+        console.log(error);
+      }
+    });
+
+    function showData(data) {
+      console.log(data);
+      mainBox.innerHTML = "";
+      data.data.forEach((ele) => {
+        console.log(ele);
+        let box = document.createElement("div");
+
+        box.innerHTML = `
+            <div class="card-wrapper">
+      
+      <div class="card">
+        
+        <div class="card-image">
+          <img src="${ele.avatar}" alt="profile one">
+        </div>
+
+      <ul class="social-icons">
+        <li>
+          <a href="">
+            <i class="fab fa-facebook-f"></i>
+          </a>
+        </li>
+        <li>
+          <a href="">
+            <i class="fab fa-instagram"></i>
+          </a>
+        </li>
+        <li>
+          <a href="">
+            <i class="fab fa-twitter"></i>
+          </a>
+        </li>
+        <li>
+          <a href="">
+            <i class="fab fa-dribbble"></i>
+          </a>
+        </li>
+      </ul>
+
+      <div class="details">
+        <h2>${ele.first_name} ${ele.last_name}
+          <br>
+          <span class="job-title">${ele.email}</span>
+        </h2>
+      </div>
+    </div>
+  </div><!-- end box wrapper --> 
+    
+            
+            `;
+        mainBox.appendChild(box);
+      });
+    }
+
+    var cssLink = document.createElement("link");
+    cssLink.href = "styles.css"; // Path to your CSS file
+    cssLink.rel = "stylesheet";
+    cssLink.type = "text/css";
+    document.head.appendChild(cssLink);
+  </script>
+</html>
